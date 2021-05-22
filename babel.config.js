@@ -22,6 +22,7 @@ module.exports = {
           '@utils': './src/app/utils',
           '@stores': './src/app/stores',
           '@reducers': './src/app/redux/reducers',
+          '@environments': './src/environments',
         },
       },
     ],
