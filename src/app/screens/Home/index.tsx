@@ -1,12 +1,16 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {Container} from '../../components/Container';
+import {Container} from '@components/Container';
+import HeaderApp from '@components/HeaderApp';
 
 const Home = () => {
   return (
-    <Container>
-      <Text>Home</Text>
-    </Container>
+    <>
+      <HeaderApp />
+      <Container preset={'fixed'} unsafe={true}>
+        <Text>Home</Text>
+      </Container>
+    </>
   );
 };
 export default Home;
