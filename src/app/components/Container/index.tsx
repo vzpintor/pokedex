@@ -9,6 +9,33 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenProps } from './props';
 import { isNonScrolling, offsets, presets } from './preset';
 import { isIOS } from 'react-native-elements/dist/helpers';
+import { useSelector } from 'react-redux';
+import { IState } from '@reduxInterfaces/rootStateInterface';
+import { SkypeIndicator } from 'react-native-indicators';
+
+function Loading() {
+  const { loading } = useSelector((state: IState) => state.general);
+
+  return (
+    <>
+      {loading && (
+        <View
+          style={{
+            flex: 1,
+            height: '100%',
+            width: '100%',
+            backgroundColor: 'rgba(0,0,0,0.6)',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'absolute',
+            zIndex: 1,
+          }}>
+          <SkypeIndicator color="white" animating={loading} size={40} />
+        </View>
+      )}
+    </>
+  );
+}
 
 function ScreenWithoutScrolling(props: ScreenProps) {
   const insets = useSafeAreaInsets();
@@ -25,6 +52,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
       behavior={isIOS ? 'padding' : undefined}
       keyboardVerticalOffset={offsets[props.keyboardOffset || 'none']}>
       <StatusBar barStyle={props.statusBar || 'light-content'} />
+      <Loading />
       <View style={[preset.inner, style, insetStyle]}>{props.children}</View>
     </KeyboardAvoidingView>
   );
@@ -46,6 +74,7 @@ function ScreenWithScrolling(props: ScreenProps) {
       keyboardVerticalOffset={offsets[props.keyboardOffset || 'none']}>
       <StatusBar barStyle={props.statusBar || 'light-content'} />
       <View style={[preset.outer, backgroundStyle, insetStyle]}>
+        <Loading />
         <ScrollView
           style={[preset.outer, backgroundStyle]}
           contentContainerStyle={[preset.inner, style]}>

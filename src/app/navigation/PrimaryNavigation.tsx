@@ -1,5 +1,5 @@
 import React from 'react';
-import {createNativeStackNavigator} from 'react-native-screens/native-stack';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import AppNavigation from '@navigation/AppNavigation';
 
 export type PrimaryParamList = {
