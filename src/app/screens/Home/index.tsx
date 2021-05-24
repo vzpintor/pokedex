@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Alert, FlatList, View } from 'react-native';
 import { Container } from '@components/Container';
 import HeaderApp from '@components/HeaderApp';
@@ -8,8 +8,6 @@ import { IState } from '@reduxInterfaces/rootStateInterface';
 import { getPokemons } from '@actions/pokemon/pokemonActions';
 import PokemonCard from '@components/PokeCard';
 import { IPokemon, IPokemonFilter } from '@shared/interface/IPokemon';
-import { useNavigation } from '@react-navigation/native';
-import { SCREENS } from '@utils/screens';
 import usePaginator from '@hooks/usePaginator';
 import { Button } from 'react-native-elements';
 
@@ -17,7 +15,6 @@ const { itemsPerPage } = require('@environments/env');
 
 const Home = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
 
   const { paginatorState, paginatorDispatch, ACTIONS } = usePaginator();
   const { limit, offset } = paginatorState;
@@ -47,11 +44,6 @@ const Home = () => {
     }
   }, [dataAllPokemons]);
 
-  const handlePress = () => {
-    console.log('handlePress');
-    navigation.navigate(SCREENS.POKEMON_DETAIL);
-  };
-
   const getPokeId = (pokemon: IPokemon): number => {
     const { url } = pokemon;
     const array = url.split('/');
@@ -59,10 +51,13 @@ const Home = () => {
     return parseInt(id, 10);
   };
 
-  const pokemonCard = ({ item }: any) => {
-    const id = getPokeId(item);
-    return <PokemonCard id={id} name={item.name} handlePress={handlePress} />;
-  };
+  const pokemonCard = useCallback(
+    ({ item }: any) => {
+      const id = getPokeId(item);
+      return <PokemonCard id={id} name={item.name} />;
+    },
+    [dataAllPokemons],
+  );
 
   const handleLoadMore = () => {
     const newLimit = limit + itemsPerPage;
@@ -76,8 +71,6 @@ const Home = () => {
       limit: newLimit,
       offset,
     };
-
-    console.log('====> Params: ', { params });
 
     dispatch(getPokemons(params));
   };

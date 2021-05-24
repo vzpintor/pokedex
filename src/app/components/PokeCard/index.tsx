@@ -3,19 +3,29 @@ import { Text, TouchableOpacity } from 'react-native';
 import { homeStyles } from '@screens/Home/styles';
 import { Card } from 'react-native-elements';
 import { IPokeCardProps } from '@components/PokeCard/IPokeCardProps';
+import { SCREENS } from '@utils/screens';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setCurrentPokemon } from '@actions/pokemon/pokemonActions';
 
-const PokeCard = ({ id, name, handlePress }: IPokeCardProps) => {
-  const onPress = () => {
-    console.log('onPress');
+const { baseUrlAssets } = require('@environments/env');
+
+const PokeCard = ({ id, name }: IPokeCardProps) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const goToDetail = () => {
+    dispatch(setCurrentPokemon(id));
+    navigation.navigate(SCREENS.POKEMON_DETAIL);
   };
 
   return (
-    <TouchableOpacity onPress={handlePress || onPress} activeOpacity={0.5}>
+    <TouchableOpacity onPress={goToDetail} activeOpacity={0.5}>
       <Card containerStyle={homeStyles.container}>
         <Card.Image
           style={homeStyles.cardImage}
           source={{
-            uri: `https://pokeres.bastionbot.org/images/pokemon/${id}.png`,
+            uri: `${baseUrlAssets}${id}.png`,
           }}
         />
         <Card.Divider />

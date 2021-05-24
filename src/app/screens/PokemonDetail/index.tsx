@@ -1,14 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Container } from '@components/Container';
 import HeaderApp from '@components/HeaderApp';
 import { Divider, Image } from 'react-native-elements';
 import { detailStyles } from '@screens/PokemonDetail/styles';
 import { Text, View } from 'react-native';
 import { homeStyles } from '@screens/Home/styles';
+import {
+  cleanCurrentPokemon,
+  cleanDetailPokemon,
+  getPokemonDetail,
+} from '@actions/pokemon/pokemonActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { IState } from '@reduxInterfaces/rootStateInterface';
+import { IStats } from '@shared/interface/IPokemon';
 import PokeSlider from '@components/PokeSlider';
 
+const { baseUrlAssets } = require('@environments/env');
+
 const PokemonDetail = () => {
-  const [value, setValue] = useState<number>(25);
+  const dispatch = useDispatch();
+
+  const { pokemonDetail, currentPokemon } = useSelector(
+    (state: IState) => state.pokemons,
+  );
+
+  useEffect(() => {
+    if (!pokemonDetail.pokemon) {
+      dispatch(getPokemonDetail());
+    }
+  }, [pokemonDetail.pokemon]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(cleanCurrentPokemon());
+      dispatch(cleanDetailPokemon());
+    };
+  }, []);
 
   return (
     <>
@@ -19,17 +46,23 @@ const PokemonDetail = () => {
             <Image
               style={homeStyles.cardImage}
               source={{
-                uri: `https://pokeres.bastionbot.org/images/pokemon/1.png`,
+                uri: `${baseUrlAssets}${currentPokemon}.png`,
               }}
             />
             <View>
-              <Text style={detailStyles.title}>#001</Text>
+              <Text style={detailStyles.title}>#00{currentPokemon}</Text>
               <View style={{ flexDirection: 'column' }}>
                 <Text style={detailStyles.title}>
-                  Height: <Text style={detailStyles.value}>0.7m</Text>
+                  Height:
+                  <Text style={detailStyles.value}>
+                    {pokemonDetail.pokemon?.height}m
+                  </Text>
                 </Text>
                 <Text style={detailStyles.title}>
-                  Weight: <Text style={detailStyles.value}>6.9kg</Text>
+                  Weight:
+                  <Text style={detailStyles.value}>
+                    {pokemonDetail.pokemon?.weight}kg
+                  </Text>
                 </Text>
               </View>
             </View>
@@ -38,12 +71,7 @@ const PokemonDetail = () => {
           <Divider />
 
           <Text style={detailStyles.description}>
-            Attacken die Schaden verursachen haben mit jedem Treffer eine 10%
-            Chance das Ziel zurückschrecken zu lassen, wenn die Attacke dies
-            nicht bereits als Nebeneffekt hat.\n\nDer Effekt stapelt nicht mit
-            dem von getragenen Items.\n\nAußerhalb vom Kampf: Wenn ein Pokémon
-            mit dieser Fähigkeit an erster Stelle im Team steht, tauchen wilde
-            Pokémon nur halb so oft auf.
+            {pokemonDetail.pokemon?.description}
           </Text>
 
           <View style={detailStyles.divider}>
@@ -53,12 +81,15 @@ const PokemonDetail = () => {
           </View>
 
           <View>
-            <PokeSlider title={'HP'} range={10} disabled={true} />
-            <PokeSlider title={'Attack'} range={15} disabled={true} />
-            <PokeSlider title={'Defense'} range={20} disabled={true} />
-            <PokeSlider title={'Speed'} range={25} disabled={true} />
-            <PokeSlider title={'Sp Atk'} range={30} disabled={true} />
-            <PokeSlider title={'Sp Def'} range={60} disabled={true} />
+            {pokemonDetail.pokemon &&
+              pokemonDetail.pokemon.stats.map(({ stat, base_stat }: IStats) => (
+                <PokeSlider
+                  key={stat.name}
+                  title={stat.name}
+                  range={base_stat}
+                  disabled={true}
+                />
+              ))}
           </View>
         </View>
       </Container>
@@ -66,4 +97,4 @@ const PokemonDetail = () => {
   );
 };
 
-export default PokemonDetail;
+export default React.memo(PokemonDetail);

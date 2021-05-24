@@ -1,5 +1,6 @@
 export const api = {
   pokemon: {
-    all: '/pokemon',
+    pokemons: '/pokemon',
+    pokeSpecie: '/pokemon-species',
   },
 };

@@ -20,12 +20,12 @@ const PokeSlider = ({
         flexDirection: 'row',
         alignItems: 'center',
       }}>
-      <View style={{ width: '20%' }}>
+      <View style={{ width: '30%' }}>
         <Text>{title}:</Text>
       </View>
       <View
         style={{
-          width: '75%',
+          width: '60%',
           alignItems: 'stretch',
           justifyContent: 'center',
         }}>
