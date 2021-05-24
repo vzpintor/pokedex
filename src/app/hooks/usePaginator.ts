@@ -1,6 +1,8 @@
 import { useReducer } from 'react';
 import { IPaginatorState } from '@reduxInterfaces/paginatorStateInterface';
 
+const { itemsPerPage } = require('@environments/env');
+
 interface IAction<T> {
   type: string;
   payload: T;
@@ -9,13 +11,11 @@ interface IAction<T> {
 const ACTIONS = {
   UPDATE_PAGE: 'UPDATE_PAGE',
   CHANGE_LIMIT: 'CHANGE_LIMIT',
-  SET_LOAD_MORE: 'SET_LOAD_MORE',
 };
 
 const initialState: IPaginatorState = {
   offset: 0,
-  limit: 50,
-  loadMore: false,
+  limit: itemsPerPage,
 };
 
 const reducer = (state: IPaginatorState, action: IAction<any>) => {
@@ -23,18 +23,12 @@ const reducer = (state: IPaginatorState, action: IAction<any>) => {
     case ACTIONS.UPDATE_PAGE:
       return {
         ...state,
-        offset: action.payload,
-        loadMore: false,
+        limit: action.payload,
       };
     case ACTIONS.CHANGE_LIMIT:
       return {
         ...state,
         limit: action.payload,
-      };
-    case ACTIONS.SET_LOAD_MORE:
-      return {
-        ...state,
-        loadMore: action.payload,
       };
     default:
       return state;
