@@ -12,12 +12,15 @@ import {
 } from '@actions/pokemon/pokemonActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '@reduxInterfaces/rootStateInterface';
-import { IStats } from '@shared/interface/IPokemon';
+import { useTranslation } from 'react-i18next';
+import { language } from '@environments/enviroment.language';
 import PokeSlider from '@components/PokeSlider';
+import { IStats } from '@shared/interface/IPokemon';
 
 const { baseUrlAssets } = require('@environments/env');
 
 const PokemonDetail = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const { pokemonDetail, currentPokemon } = useSelector(
@@ -53,13 +56,13 @@ const PokemonDetail = () => {
               <Text style={detailStyles.title}>#00{currentPokemon}</Text>
               <View style={{ flexDirection: 'column' }}>
                 <Text style={detailStyles.title}>
-                  Height:
+                  {t(language.height)}:
                   <Text style={detailStyles.value}>
                     {pokemonDetail.pokemon?.height}m
                   </Text>
                 </Text>
                 <Text style={detailStyles.title}>
-                  Weight:
+                  {t(language.weight)}:
                   <Text style={detailStyles.value}>
                     {pokemonDetail.pokemon?.weight}kg
                   </Text>
@@ -76,7 +79,7 @@ const PokemonDetail = () => {
 
           <View style={detailStyles.divider}>
             <Divider style={{ width: 100 }} />
-            <Text>STATISTICS</Text>
+            <Text>{t(language.statistics)}</Text>
             <Divider style={{ width: 100 }} />
           </View>
 

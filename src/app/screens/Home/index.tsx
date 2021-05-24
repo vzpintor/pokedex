@@ -10,10 +10,13 @@ import PokemonCard from '@components/PokeCard';
 import { IPokemon, IPokemonFilter } from '@shared/interface/IPokemon';
 import usePaginator from '@hooks/usePaginator';
 import { Button } from 'react-native-elements';
+import { useTranslation } from 'react-i18next';
+import { language } from '@environments/enviroment.language';
 
 const { itemsPerPage } = require('@environments/env');
 
 const Home = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const { paginatorState, paginatorDispatch, ACTIONS } = usePaginator();
@@ -81,7 +84,7 @@ const Home = () => {
         <View style={{ padding: 25 }}>
           <Button
             onPress={handleLoadMore}
-            title="Cargar mas elementos"
+            title={t(language.loadMore)}
             type="outline"
             buttonStyle={{ borderColor: 'black' }}
             titleStyle={{ color: 'black' }}

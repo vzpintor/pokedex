@@ -1,3 +1,4 @@
+import './app/i18n';
 import React, { createRef, FunctionComponent as Component } from 'react';
 import { Provider, useSelector } from 'react-redux';
 import {

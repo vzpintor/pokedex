@@ -5,8 +5,11 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { headerAppStyle } from '@components/HeaderApp/styles';
 import { useNavigation } from '@react-navigation/native';
 import { color } from '@theme/color';
+import { useTranslation } from 'react-i18next';
+import { language } from '@environments/enviroment.language';
 
 const HeaderApp = ({ back = false }: IHeaderAppProps) => {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const styles = headerAppStyle;
@@ -34,7 +37,7 @@ const HeaderApp = ({ back = false }: IHeaderAppProps) => {
                 type="ionicon"
                 style={{ marginRight: 5 }}
               />
-              <Text style={styles.backTitle}>Back</Text>
+              <Text style={styles.backTitle}>{t(language.goBack)}</Text>
             </TouchableOpacity>
           )}
         </>
