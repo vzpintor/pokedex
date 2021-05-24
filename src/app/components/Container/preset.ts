@@ -1,5 +1,5 @@
-import {ViewStyle} from 'react-native';
-import {isNil} from 'ramda';
+import { ViewStyle } from 'react-native';
+import { isNil } from 'ramda';
 
 /**
  * All screen keyboard offsets.
@@ -46,7 +46,7 @@ export const presets = {
       flex: 1,
       height: '100%',
     } as ViewStyle,
-    inner: {justifyContent: 'flex-start', alignItems: 'stretch'} as ViewStyle,
+    inner: { justifyContent: 'flex-start', alignItems: 'stretch' } as ViewStyle,
   },
 };
 

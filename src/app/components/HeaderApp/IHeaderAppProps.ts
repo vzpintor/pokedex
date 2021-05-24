@@ -1,3 +1,3 @@
 export interface IHeaderAppProps {
-  back?: false;
+  back?: boolean;
 }

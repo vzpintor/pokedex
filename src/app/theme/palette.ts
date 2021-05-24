@@ -1,7 +1,7 @@
-import {IPrimaryColors} from '@shared/interface/IPrimaryColors';
+import { IPrimaryColors } from '@shared/interface/IPrimaryColors';
 
 export const palette: IPrimaryColors = {
-  blue: '#00B1CA',
+  blue: '#2A90BA',
   black: '#1d1d1d',
   white: '#ffffff',
   orange: '#FBA928',

@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {BackHandler} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { BackHandler } from 'react-native';
 import {
   NavigationContainerRef,
   NavigationState,
@@ -137,5 +137,5 @@ export function useNavigationPersistence(storage: any, persistenceKey: string) {
     if (isRestoringNavigationState) restoreState();
   }, [isRestoringNavigationState]);
 
-  return {onNavigationStateChange, restoreState, initialNavigationState};
+  return { onNavigationStateChange, restoreState, initialNavigationState };
 }

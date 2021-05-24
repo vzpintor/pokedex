@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
-import {Header, Icon} from 'react-native-elements';
-import {IHeaderAppProps} from '@components/HeaderApp/IHeaderAppProps';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {headerAppStyle} from '@components/HeaderApp/styles';
-import {useNavigation} from '@react-navigation/native';
-import {color} from '@theme/color';
+import React from 'react';
+import { Header, Icon } from 'react-native-elements';
+import { IHeaderAppProps } from '@components/HeaderApp/IHeaderAppProps';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { headerAppStyle } from '@components/HeaderApp/styles';
+import { useNavigation } from '@react-navigation/native';
+import { color } from '@theme/color';
 
-const HeaderApp = ({back = false}: IHeaderAppProps) => {
+const HeaderApp = ({ back = false }: IHeaderAppProps) => {
   const navigation = useNavigation();
 
   const styles = headerAppStyle;
@@ -32,7 +32,7 @@ const HeaderApp = ({back = false}: IHeaderAppProps) => {
                 color="#fff"
                 name="chevron-back"
                 type="ionicon"
-                style={{marginRight: 5}}
+                style={{ marginRight: 5 }}
               />
               <Text style={styles.backTitle}>Back</Text>
             </TouchableOpacity>
