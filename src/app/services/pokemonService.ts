@@ -8,5 +8,14 @@ const { api } = require('@environments/env');
 export const getPokemonService = async (
   params: IPokemonFilter,
 ): Promise<AxiosResponse<IResponsePokemon>> => {
-  return await get(api.pokemon.all, { params });
+  console.log('Params: ', { params });
+  let url = api.pokemon.all;
+  const { search } = params;
+
+  if (search && search !== '') {
+    console.log('Buscando con filtro', search);
+    url += `/${search}`;
+  }
+  console.log('URL: ', url);
+  return await get(`${url}`, { params });
 };

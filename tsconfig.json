@@ -51,7 +51,8 @@
       "@shared/*": ["./src/app/shared/*"],
       "@theme/*": ["./src/app/theme/*"],
       "@services/*": ["./src/app/services/*"],
-      "@reduxInterfaces/*": ["./src/app/redux/interface/*"]
+      "@reduxInterfaces/*": ["./src/app/redux/interface/*"],
+      "@hooks/*": ["./src/app/hooks/*"]
     },
     // "baseUrl": "./",                       /* Base directory to resolve non-absolute module names. */
     // "paths": {},                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */

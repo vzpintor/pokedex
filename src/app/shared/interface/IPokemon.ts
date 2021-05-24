@@ -5,6 +5,7 @@ export interface IPokemon {
 }
 
 export interface IPokemonFilter {
-  offset: number;
-  limit: number;
+  offset?: number;
+  limit?: number;
+  search?: string;
 }

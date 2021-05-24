@@ -6,7 +6,7 @@ import { MESSAGES } from '@services/config/messages';
 
 export const genericError = async (
   error: AxiosError,
-  showAlert: boolean = true,
+  showAlert: boolean = false,
 ): Promise<AxiosResponse | any> => {
   if (error) {
     if (error.response) {
@@ -21,7 +21,6 @@ export const genericError = async (
         Alert.alert('', MESSAGES.INTERNAL_SERVER);
       }
 
-      console.error('Error ==>', message || response);
       return response;
     }
   }

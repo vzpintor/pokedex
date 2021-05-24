@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { IResponsePokemon } from '@shared/interface/IResponse';
 
 export interface IAllPokemonState {
@@ -7,5 +6,5 @@ export interface IAllPokemonState {
 
 export interface IPokemonListState {
   dataAllPokemons: IResponsePokemon | null;
-  errorAllPokemons: AxiosError | null;
+  errorAllPokemons: string | null;
 }

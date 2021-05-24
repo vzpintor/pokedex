@@ -3,27 +3,17 @@ import { isIOS } from 'react-native-elements/dist/helpers';
 import { SearchBar } from 'react-native-elements';
 import { ISearchProps } from '@components/Search/ISearchProps';
 
-const Search = ({ customHandleSubmit = () => {} }: ISearchProps) => {
+const Search = ({ onSearch }: ISearchProps) => {
   const [search, setSearch] = useState<string>('');
-
-  const handleSubmit = () => {
-    console.log('Buscando....', { search });
-    customHandleSubmit();
-  };
-
-  const handleChange = (inputText: string) => {
-    console.log({ inputText });
-    setSearch(inputText);
-  };
 
   return (
     <SearchBar
       platform={isIOS ? 'ios' : 'android'}
       placeholder="Type Here..."
-      onChangeText={handleChange}
+      onChangeText={setSearch}
       value={search}
       returnKeyType={'search'}
-      onSubmitEditing={handleSubmit}
+      onSubmitEditing={() => onSearch(search)}
     />
   );
 };

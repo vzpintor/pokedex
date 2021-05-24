@@ -1,5 +1,5 @@
-import { IGeneralState } from './generalInterface';
-import { IAllPokemonState } from './pokemonInterface';
+import { IGeneralState } from '@reduxInterfaces/generalStateInterface';
+import { IAllPokemonState } from '@reduxInterfaces/pokemonStateInterface';
 
 export interface IState {
   general: IGeneralState;

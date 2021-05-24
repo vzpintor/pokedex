@@ -30,6 +30,7 @@ module.exports = {
           '@theme': './src/app/theme',
           '@services': './src/app/services',
           '@reduxInterfaces': './src/app/redux/interface',
+          '@hooks': './src/app/hooks',
         },
       },
     ],

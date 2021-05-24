@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlatList } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 import { Container } from '@components/Container';
 import HeaderApp from '@components/HeaderApp';
 import Search from '@components/Search';
@@ -7,21 +7,45 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '@reduxInterfaces/rootStateInterface';
 import { getPokemons } from '@actions/pokemon/pokemonActions';
 import PokemonCard from '@components/PokeCard';
-import { IPokemon } from '@shared/interface/IPokemon';
+import { IPokemon, IPokemonFilter } from '@shared/interface/IPokemon';
 import { useNavigation } from '@react-navigation/native';
 import { SCREENS } from '@utils/screens';
+import usePaginator from '@hooks/usePaginator';
 
 const Home = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const { dataAllPokemons } = useSelector(
+  const { paginatorState, paginatorDispatch, ACTIONS } = usePaginator();
+  const { limit, offset, loadMore } = paginatorState;
+
+  const { dataAllPokemons, errorAllPokemons } = useSelector(
     (state: IState) => state.pokemons.pokemonList,
   );
 
+  const handleSearch = (search: string) => {
+    paginatorDispatch({
+      type: ACTIONS.UPDATE_PAGE,
+      payload: 0,
+    });
+
+    const params: IPokemonFilter = {
+      search,
+      limit,
+      offset,
+    };
+    dispatch(getPokemons(params));
+  };
+
+  useEffect(() => {
+    if (errorAllPokemons) {
+      Alert.alert('', errorAllPokemons);
+    }
+  }, [errorAllPokemons]);
+
   useEffect(() => {
     if (!dataAllPokemons) {
-      dispatch(getPokemons({ offset: 0, limit: 50 }));
+      dispatch(getPokemons({ offset, limit }));
     }
   }, [dataAllPokemons]);
 
@@ -45,11 +69,12 @@ const Home = () => {
   return (
     <>
       <HeaderApp />
-      <Container unsafe={true} keyboardOffset={'none'}>
-        <Search />
+      <Container unsafe={true}>
+        <Search onSearch={handleSearch} />
         {dataAllPokemons && (
           <FlatList
-            data={dataAllPokemons.results}
+            initialNumToRender={12}
+            data={dataAllPokemons.results || dataAllPokemons.forms}
             numColumns={3}
             renderItem={pokemonCard}
             keyExtractor={pokemon => pokemon.name}

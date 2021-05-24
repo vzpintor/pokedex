@@ -1,3 +1,3 @@
 export interface ISearchProps {
-  customHandleSubmit?: any;
+  onSearch: (search: string) => void;
 }
