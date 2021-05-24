@@ -1,5 +1,5 @@
 import React, { createRef, FunctionComponent as Component } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -11,12 +11,39 @@ import { useNavigationPersistence } from '@navigation/NavigationUtilities';
 import { RootNavigator } from '@navigation/RootNavigator';
 import { persistor, rootStore } from '@stores/rootStore';
 import { PersistGate } from 'redux-persist/integration/react';
+import { IState } from '@reduxInterfaces/rootStateInterface';
+import { View } from 'react-native';
+import { SkypeIndicator } from 'react-native-indicators';
 
 enableScreens();
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
 export const navigationRef: any = createRef<NavigationContainerRef>();
+
+function Loading() {
+  const { loading } = useSelector((state: IState) => state.general);
+
+  return (
+    <>
+      {loading && (
+        <View
+          style={{
+            flex: 1,
+            height: '100%',
+            width: '100%',
+            backgroundColor: 'rgba(0,0,0,0.6)',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'absolute',
+            zIndex: 1,
+          }}>
+          <SkypeIndicator color="white" animating={loading} size={40} />
+        </View>
+      )}
+    </>
+  );
+}
 
 const App: Component<{}> = () => {
   const { initialNavigationState, onNavigationStateChange } =
@@ -31,6 +58,7 @@ const App: Component<{}> = () => {
             initialState={initialNavigationState}
             onStateChange={onNavigationStateChange}
           />
+          <Loading />
         </SafeAreaProvider>
       </PersistGate>
     </Provider>

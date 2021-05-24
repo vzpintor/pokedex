@@ -8,6 +8,7 @@ const Search = ({ onSearch }: ISearchProps) => {
 
   return (
     <SearchBar
+      onCancel={() => onSearch(search)}
       platform={isIOS ? 'ios' : 'android'}
       placeholder="Type Here..."
       onChangeText={setSearch}
